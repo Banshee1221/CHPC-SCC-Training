@@ -1,3 +1,4 @@
 - [Home](/)
 - [Introduction](intro.md)
 - [Linux](linux.md)
+- [Linux Basics](linux_basics.md)
