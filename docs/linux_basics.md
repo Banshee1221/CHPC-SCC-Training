@@ -4,7 +4,10 @@ This chapter will guide you through some basics that you will need to know in or
 
 ## Linux commands
 
-There are some basic commands that you need to familiarize yourself with. This section will take you through some of them. I am logged into my home computer named `ArchBanshee`, with the user account `banshee` for the following examples.
+There are some basic commands that you need to familiarize yourself with. There are verbs or actions that perform certain tasks. Commands can also have "switches" or "options", which modify their behaviour or extend their functionality. This is usually represented by a `-` (dash) character followed by a phrase after the command is given. For example, if you wanted to use `ls` (mentioned below), you type `ls` and hit enter, but if you wanted `ls` to sort by date when it outputs, you'd use `ls -t`. 
+
+This section will take you through some of the basic commands that you will use on a regular basis. I am logged into my home computer named `ArchBanshee`, with the user account `banshee` for the following examples.
+
 
 ### 1. pwd
 
@@ -115,8 +118,6 @@ In the case of our example, we'd use:
 grep -o "for" mybook.txt | wc -l
 ```
 This will give us a number that shows the exact amount of times that the word "for" is used in the book.
-
-## Video runthrough
 
 ## Cheat sheet
 

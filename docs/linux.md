@@ -24,7 +24,9 @@ For example, when you open the file explorer to see your files, the graphical en
 Here is an example of a linux terminal:
 ![Gnome terminal](resources/img/linux_terminal.png)
 
-Here you see `[edebeste@ArchSANBI ~]$`. The first part, `edebeste`, represents the user account that you are logged into. My user account on my computer is called `edebeste`. The `@ArchSANBI` part represents the computer that you are using. My laptop is named `ArchSANBI`, so `edebeste@ArchSANBI` is saying that the user `edebeste` is logged into the machine (my laptop) `ArchSANBI`. **The `~` represents that I am in my user accounts home folder**. The `$` shows that it is ready for your input to the terminal. From here on, you type a command and press enter to execute it.
+Here you see `[edebeste@ArchSANBI ~]$`. The first part, `edebeste`, represents the user account that you are logged into. My user account on my computer is called `edebeste`. The `@ArchSANBI` part represents the computer that you are using. My laptop is named `ArchSANBI`, so `edebeste@ArchSANBI` is saying that the user `edebeste` is logged into the machine (my laptop) `ArchSANBI`.
+
+**The `~` represents that I am in my user accounts home folder**. The `$` shows that it is ready for your input to the terminal. From here on, you type a command and press enter to execute it.
 
 ## The linux filesystem
 
