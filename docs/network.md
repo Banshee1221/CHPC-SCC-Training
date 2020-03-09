@@ -42,4 +42,70 @@ So how does it work when you plug a machine in and it automagically gets an IP a
 
 # Setting up Networking in Linux
 
--- TODO
+!> For this competition, you need to be able to set a static IP address on all machines that you are working with.
+
+There are three main ways of settings static IP addresses up on machines. It used to be two, but then Ubuntu decided to try to be special and do its own thing as well. I will cover how to set a static IP address on both RHEL-based Linux distributions (CentOS, Fedora, RHEL) and Debian-based ones (Ubuntu, Debian).
+
+As a rule, if you want to get the IP/network interfaces that you have on a machine, or you want to check the IP addresses assigned to the interfaces, you can use the command `ip address`. It will result in something like the following:
+
+```shell
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:16:3e:c0:ee:18 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.2.97/24 brd 192.168.2.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::216:3eff:fec0:ee18/64 scope link 
+       valid_lft forever preferred_lft forever
+```
+
+`lo` and `eth0` are both network interfaces, but `lo` is a virtual interface. It is safe to ignore. `eth0` is a real network interface that can be manipulated.
+
+## Debian-based
+
+### Debian and Ubuntu (version 16.04 and below)
+
+Debian and older Ubuntu distributions use what's called `ifupdown`. It is a set of scripts that manage the bringing up or shutting down of interfaces as well as setting their IP information. The directory `/etc/network/` contains all of the network configuration scripts for these operating systems. `ifupdown` has a bunch of commands that can be used. Here is a quick list of some of the important commands:
+
+| Command | Function |
+|---------|-------------|
+| `ifup <interface_name>` | Brings an interface with the name `interface_name` up and sets its configuration |
+| `ifdown <interface_name>` | Brings an interface with the name `interface_name` down and removes its configuration |
+| `ifup -a` | Automatically brings up all interfaces as detailed in the configuration file |
+
+#### The "interfaces" file
+
+In the `/etc/network` directory exists a file called `interrfaces`. This is a key file that contains configuration for settings static or dynamic IP addresses. In there, you will find configuration that looks similar to the following:
+
+> _/etc/network/interfaces:_
+```ini
+1    # This file describes the network interfaces available on your system
+2    # and how to activate them. For more information, see interfaces(5).
+3    
+4    # The loopback network interface
+5    auto lo
+6    iface lo inet loopback
+7    
+8    # The primary network interface
+9    auto eth0
+10   iface eth0 inet dhcp
+```
+
+Everything with a hash/pound (#) in front of it can be ignored. These are comments in the file that are not used as part of the logic. They are purely for additional information.
+
+In line 5 we have two important keywords: `auto lo`
+- The `auto` parameter tells the command `ifup -a` to bring this interface up. Interfaces that do not have `auto` specified will be ignored by `ifup -a`. 
+- The `lo` parameter is the name of the interface that the auto should apply to. In this specific case, the `lo` interface stands for loopback. **This interface should be ignored and left alone. It is a reference for the operating system that points to itself.**
+
+Line 6 has some more detailed information that controls HOW the interface is configured one it's brought up.
+- The `iface` parameter means that you are about to describe configuration details for a network interface.
+- The parameter following `iface` is the name of the interface that you want to apply a configuration to.
+- The `inet` parameter indicates that this is a _TCP/IP_ network. This is something that should always be there.
+- The `dhcp` parameter means that this interface (specified after `iface`) should ask for an IP address instead of setting one statically.
+
+This structure is applied to every interface that you may have on your machine.
+
